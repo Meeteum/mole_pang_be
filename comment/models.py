@@ -13,7 +13,7 @@ class Comment(models.Model):
         db_table = "comment"
         verbose_name = "comment"
         verbose_name_plural = "comments"
-        ordering = ['-create_date', ]
+        ordering = ['-create_date']
 
 
 class Reply(models.Model):
@@ -29,4 +29,4 @@ class Reply(models.Model):
         db_table = "reply"
         verbose_name = "reply"
         verbose_name_plural = "replies"
-        ordering = ['-create_date', ]
+        ordering = ['-create_date']
