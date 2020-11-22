@@ -16,4 +16,3 @@ class Ranking(models.Model):
         verbose_name = "ranking"
         verbose_name_plural = "ranking"
         ordering = ['-score', '-play_date']
-

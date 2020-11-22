@@ -7,7 +7,7 @@ from .serializers import RankingSerializer
 
 class RankingList(APIView):
     """
-    Ranking 리스트 및 생성(본인 Rankging)
+    Ranking 리스트 및 생성(본인 Ranking)
     """
 
     # noinspection PyMethodMayBeStatic
