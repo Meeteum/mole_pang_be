@@ -46,6 +46,8 @@ class CommentList(APIView):
             decoded_hashed_password = hashed_password.decode('utf-8')
             serializer.validated_data['password'] = decoded_hashed_password
             serializer.save()
+            comment = Comment.objects.get(pk=serializer.data['id'])
+            serializer = CommentListSerializer(comment)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -84,6 +86,8 @@ class CommentDetail(APIView):
             })
             if serializer.is_valid():
                 serializer.save()
+                comment = Comment.objects.get(pk=serializer.data['id'])
+                serializer = CommentListSerializer(comment)
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Http404:
@@ -111,6 +115,8 @@ class ReplyCreate(APIView):
             decoded_hashed_password = hashed_password.decode('utf-8')
             serializer.validated_data['password'] = decoded_hashed_password
             serializer.save(comment_id=pk)
+            comment = Comment.objects.get(pk=pk)
+            serializer = CommentListSerializer(comment)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -132,16 +138,16 @@ class ReplyDetail(APIView):
         except Reply.DoesNotExist:
             raise Http404
 
-    def post(self, request, pk):
+    def post(self, request, pk, reply_id):
         try:
-            self.get_object(pk, request.data['nickname'], request.data['password'])
+            self.get_object(reply_id, request.data['nickname'], request.data['password'])
             return Response(status.HTTP_204_NO_CONTENT)
         except Http404:
             return Response(status.HTTP_404_NOT_FOUND)
 
-    def put(self, request, pk):
+    def put(self, request, pk, reply_id):
         try:
-            reply = self.get_object(pk, request.data['nickname'], request.data['password'])
+            reply = self.get_object(reply_id, request.data['nickname'], request.data['password'])
             serializer = ReplyUpdateSerializer(reply, data={
                 'nickname': reply.nickname,
                 'password': reply.password,
@@ -149,14 +155,16 @@ class ReplyDetail(APIView):
             })
             if serializer.is_valid():
                 serializer.save()
+                comment = Comment.objects.get(pk=pk)
+                serializer = CommentListSerializer(comment)
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Http404:
             return Response(status.HTTP_404_NOT_FOUND)
 
-    def delete(self, request, pk):
+    def delete(self, request, pk, reply_id):
         try:
-            reply = self.get_object(pk, request.data['nickname'], request.data['password'])
+            reply = self.get_object(reply_id, request.data['nickname'], request.data['password'])
             reply.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Http404:
