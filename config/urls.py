@@ -23,5 +23,5 @@ urlpatterns = [
     path('comment/', include('comment.urls')),
     path('ranking/', include('ranking.urls')),
 
-    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    url(r'^document/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

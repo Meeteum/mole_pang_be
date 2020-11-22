@@ -128,3 +128,9 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000'
 ]
 CORS_ALLOW_CREDENTIALS = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
