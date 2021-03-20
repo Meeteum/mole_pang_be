@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('comment/', include('comment.urls')),
     path('ranking/', include('ranking.urls')),
+    path('problem/', include('problem.urls')),
 
     url(r'^document/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
