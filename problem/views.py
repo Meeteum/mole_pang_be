@@ -85,7 +85,7 @@ class InitProblemData(APIView):
     def post(self, request):
         try:
             api_key = request.headers['x-api-key']
-            if api_key != os.environ.get('API_KEY'):
+            if api_key != 'molepangbeapikey':
                 raise KeyError
         except KeyError:
             return Response("Bad Request", status=status.HTTP_400_BAD_REQUEST)
