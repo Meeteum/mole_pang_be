@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -24,7 +24,7 @@ SECRET_KEY = "qv!_%qara$3-g(q=d)&2f=rmp@ne+t0tkm!(j&y!v2a^2jxeqd"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['molepangbe.pythonanywhere.com']
+ALLOWED_HOSTS = ['molepangbe.pythonanywhere.com', '127.0.0.1']
 
 # Application definition
 
