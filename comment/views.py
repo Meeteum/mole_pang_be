@@ -265,7 +265,7 @@ class ReplyDetail(APIView):
         except Reply.DoesNotExist:
             raise Http404
 
-    def post(self, request, _, reply_id):
+    def post(self, request, pk, reply_id):
         """
             답글(Reply) 비밀번호 확인
 
@@ -288,7 +288,7 @@ class ReplyDetail(APIView):
         except Http404:
             return Response(status.HTTP_404_NOT_FOUND)
 
-    def put(self, request, _, reply_id):
+    def put(self, request, pk, reply_id):
         """
             답글(Reply) 수정
 
@@ -331,9 +331,9 @@ class ReplyDetail(APIView):
         except Http404:
             return Response(status.HTTP_404_NOT_FOUND)
 
-    def delete(self, request, _, reply_id):
+    def delete(self, request, pk, reply_id):
         """
-            답글(Reply) 수정
+            답글(Reply) 삭제
 
             ---
             ### url: /comment/{comment_id}/reply/{reply_id}/
