@@ -61,9 +61,25 @@ class RankingList(APIView):
             serializer.save()
             my_id = serializer.data['id']
             my_rank = serializer.data['ranking']
-            ranking_id_list = \
-                [ranking.id for ranking in Ranking.objects.all() if my_rank - 5 <= ranking.ranking <= my_rank + 5]
-            ranking = Ranking.objects.filter(id__in=ranking_id_list)
+
+            all_ranking = Ranking.objects.all()
+            ranking_count = len(all_ranking)
+
+            ordered_ranking = sorted(all_ranking, key=lambda x: x.ranking)
+
+            my_index = None
+            for index, ranking in enumerate(ordered_ranking):
+                if ranking.ranking == my_rank:
+                    my_index = index
+                    break
+
+            if my_index == 0 or my_index == 1:
+                ranking = ordered_ranking[:5]
+            elif my_index == ranking_count - 1 or my_index == ranking_count - 2:
+                ranking = ordered_ranking[ranking_count-5:ranking_count]
+            else:
+                ranking = ordered_ranking[my_index-2:my_index+3]
+
             serializer = RankingSerializer(ranking, many=True)
             return Response({"my_id": my_id, "ranking": serializer.data}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
