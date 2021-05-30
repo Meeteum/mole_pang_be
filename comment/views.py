@@ -39,7 +39,8 @@ class CommentList(APIView):
                 {
                     "comments": 페이징된 댓글 리스트,
                     "total_page": 전체 페이지,
-                    "current_page": 현재 페이지
+                    "current_page": 현재 페이지,
+                    "total_count": 전체 댓글 수
                 }
         """
         total_rows = Comment.objects.count()
@@ -63,7 +64,9 @@ class CommentList(APIView):
         comments = Comment.objects.all()[start_index:end_index]
 
         serializer = CommentListSerializer(comments, many=True)
-        return Response({"comments": serializer.data, "total_page": total_page, "current_page": page})
+        return Response(
+            {"comments": serializer.data, "total_page": total_page, "current_page": page, "total_count": total_rows}
+        )
 
     # noinspection PyMethodMayBeStatic
     def post(self, request):
