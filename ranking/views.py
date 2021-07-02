@@ -53,7 +53,8 @@ class RankingList(APIView):
             ### 반환값
                 {
                     "my_id": 등록한 사용자의 ID,
-                    "ranking": 등록한 사용자 기준 위아래 5개 Ranking 객체
+                    "ranking": 등록한 사용자 기준 위아래 5개 Ranking 객체,
+                    "total_count": 등록된 전체 사용자 수
                 }
         """
         serializer = RankingSerializer(data=request.data)
@@ -81,5 +82,6 @@ class RankingList(APIView):
                 ranking = ordered_ranking[my_index-2:my_index+3]
 
             serializer = RankingSerializer(ranking, many=True)
-            return Response({"my_id": my_id, "ranking": serializer.data}, status=status.HTTP_201_CREATED)
+            return Response({"my_id": my_id, "ranking": serializer.data, "total_count": ranking_count},
+                            status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
